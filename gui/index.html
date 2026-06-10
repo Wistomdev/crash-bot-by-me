@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuke Bot - Control Panel</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Custom Title Bar -->
+  <div class="titlebar">
+    <div class="titlebar-drag">
+      <div class="titlebar-icon">☠</div>
+      <div class="titlebar-title">Nuke Bot Control Panel</div>
+    </div>
+    <div class="titlebar-controls">
+      <button class="titlebar-button" id="minimize-btn">─</button>
+      <button class="titlebar-button" id="maximize-btn">□</button>
+      <button class="titlebar-button close" id="close-btn">✕</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">☠</div>
+        <div class="logo-text">NUKE BOT</div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-tab="attack">
+          <span class="nav-icon">🎯</span>
+          <span class="nav-text">Attack</span>
+        </button>
+        <button class="nav-item" data-tab="webhook">
+          <span class="nav-icon">🔗</span>
+          <span class="nav-text">Webhook</span>
+        </button>
+        <button class="nav-item" data-tab="settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-text">Settings</span>
+        </button>
+        <button class="nav-item" data-tab="logs">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Logs</span>
+        </button>
+        <button class="nav-item" data-tab="about">
+          <span class="nav-icon">ℹ️</span>
+          <span class="nav-text">About</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-indicator">
+          <div class="status-dot" id="status-dot"></div>
+          <div class="status-text" id="status-text">Ready</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Panel -->
+    <div class="main-panel">
+      <!-- Attack Tab -->
+      <div class="tab-content active" id="attack-tab">
+        <div class="panel-header">
+          <h1 class="panel-title">Attack Configuration</h1>
+          <p class="panel-subtitle">Configure and launch your attack</p>
+        </div>
+
+        <div class="form-grid">
+          <!-- Bot Token -->
+          <div class="form-group full-width">
+            <label class="form-label">Bot Token</label>
+            <input type="password" class="form-input" id="token" placeholder="Enter your bot token...">
+          </div>
+
+          <!-- Mode Selection -->
+          <div class="form-group">
+            <label class="form-label">Attack Mode</label>
+            <select class="form-select" id="mode">
+              <option value="pereezd">🚀 Pereezd (Full Raid)</option>
+              <option value="full">💥 Full Destruction</option>
+              <option value="light">⚡ Light Raid</option>
+              <option value="none">📢 Spam Only</option>
+            </select>
+          </div>
+
+          <!-- Concurrency -->
+          <div class="form-group">
+            <label class="form-label">Concurrency</label>
+            <input type="number" class="form-input" id="concurrency" value="50" min="1" max="200">
+          </div>
+
+          <!-- Channel Name -->
+          <div class="form-group">
+            <label class="form-label">Channel Name</label>
+            <input type="text" class="form-input" id="channelName" value="discord.gg/vigilant">
+          </div>
+
+          <!-- Role Name -->
+          <div class="form-group">
+            <label class="form-label">Role Name</label>
+            <input type="text" class="form-input" id="roleName" value="discord.gg/vigilant">
+          </div>
+
+          <!-- Message Text -->
+          <div class="form-group full-width">
+            <label class="form-label">Spam Message</label>
+            <textarea class="form-textarea" id="messageText" rows="3" placeholder="Enter spam message...">@everyone # Приветик вам от Wistom</textarea>
+          </div>
+
+          <!-- Server Name -->
+          <div class="form-group">
+            <label class="form-label">New Server Name</label>
+            <input type="text" class="form-input" id="serverName" value="discord.gg/vigilant">
+          </div>
+
+          <!-- Server Icon -->
+          <div class="form-group">
+            <label class="form-label">Server Icon URL</label>
+            <input type="text" class="form-input" id="serverIcon" placeholder="https://...">
+          </div>
+
+          <!-- Options -->
+          <div class="form-group full-width">
+            <div class="options-grid">
+              <label class="checkbox-label">
+                <input type="checkbox" id="infiniteSpam" checked>
+                <span class="checkbox-custom"></span>
+                <span>Infinite Spam</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="dmMembers" checked>
+                <span class="checkbox-custom"></span>
+                <span>DM Members</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="createBackup">
+                <span class="checkbox-custom"></span>
+                <span>Create Backup</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="leaveImmediately">
+                <span class="checkbox-custom"></span>
+                <span>Leave Immediately</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="start-btn">
+            <span class="btn-icon">🚀</span>
+            <span>Launch Attack</span>
+          </button>
+          <button class="btn btn-danger" id="stop-btn" disabled>
+            <span class="btn-icon">🛑</span>
+            <span>Stop Attack</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Webhook Tab -->
+      <div class="tab-content" id="webhook-tab">
+        <div class="panel-header">
+          <h1 class="panel-title">Webhook Spammer</h1>
+          <p class="panel-subtitle">Spam messages through Discord webhooks</p>
+        </div>
+
+        <div class="form-grid">
+          <!-- Webhook URL -->
+          <div class="form-group full-width">
+            <label class="form-label">Webhook URL</label>
+            <input type="text" class="form-input" id="webhook-url" placeholder="https://discord.com/api/webhooks/...">
+          </div>
+
+          <!-- Username -->
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-input" id="webhook-username" value="Spammer" placeholder="Bot username">
+          </div>
+
+          <!-- Avatar URL -->
+          <div class="form-group">
+            <label class="form-label">Avatar URL (Optional)</label>
+            <input type="text" class="form-input" id="webhook-avatar" placeholder="https://...">
+          </div>
+
+          <!-- Message Content -->
+          <div class="form-group full-width">
+            <label class="form-label">Message Content</label>
+            <textarea class="form-textarea" id="webhook-message" rows="4" placeholder="Enter message to spam...">@everyone Webhook spam test</textarea>
+          </div>
+
+          <!-- Spam Count -->
+          <div class="form-group">
+            <label class="form-label">Message Count</label>
+            <input type="number" class="form-input" id="webhook-count" value="100" min="1" max="10000">
+          </div>
+
+          <!-- Delay -->
+          <div class="form-group">
+            <label class="form-label">Delay (ms)</label>
+            <input type="number" class="form-input" id="webhook-delay" value="0" min="0" max="5000">
+          </div>
+
+          <!-- Options -->
+          <div class="form-group full-width">
+            <div class="options-grid">
+              <label class="checkbox-label">
+                <input type="checkbox" id="webhook-tts">
+                <span class="checkbox-custom"></span>
+                <span>Text-to-Speech</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="webhook-infinite" checked>
+                <span class="checkbox-custom"></span>
+                <span>Infinite Spam</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="webhook-start-btn">
+            <span class="btn-icon">🚀</span>
+            <span>Start Spam</span>
+          </button>
+          <button class="btn btn-danger" id="webhook-stop-btn" disabled>
+            <span class="btn-icon">🛑</span>
+            <span>Stop Spam</span>
+          </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="webhook-stats" style="margin-top: 30px; padding: 20px; background: rgba(10, 10, 10, 0.7); border: 1px solid rgba(143, 188, 143, 0.2);">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center;">
+            <div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 5px;">SENT</div>
+              <div style="font-size: 24px; color: var(--text-primary);" id="webhook-sent">0</div>
+            </div>
+            <div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 5px;">FAILED</div>
+              <div style="font-size: 24px; color: #c89090;" id="webhook-failed">0</div>
+            </div>
+            <div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 5px;">RATE</div>
+              <div style="font-size: 24px; color: var(--text-secondary);" id="webhook-rate">0/s</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Tab -->
+      <div class="tab-content" id="settings-tab">
+        <div class="panel-header">
+          <h1 class="panel-title">Settings</h1>
+          <p class="panel-subtitle">Configure application settings</p>
+        </div>
+        <div class="settings-content">
+          <p class="text-muted">Settings coming soon...</p>
+        </div>
+      </div>
+
+      <!-- Logs Tab -->
+      <div class="tab-content" id="logs-tab">
+        <div class="panel-header">
+          <h1 class="panel-title">Activity Logs</h1>
+          <p class="panel-subtitle">Real-time attack logs</p>
+        </div>
+        <div class="logs-container" id="logs-container">
+          <div class="log-entry">
+            <span class="log-time">00:00:00</span>
+            <span class="log-message">System ready</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Tab -->
+      <div class="tab-content" id="about-tab">
+        <div class="panel-header">
+          <h1 class="panel-title">About</h1>
+          <p class="panel-subtitle">Information about Nuke Bot</p>
+        </div>
+        <div class="about-content">
+          <div class="about-card">
+            <h2>Nuke Bot v1.0.0</h2>
+            <p>By Crash Bot Wistom |</p>
+            <div class="about-features">
+              <div class="feature-item">✅ Multiple attack modes</div>
+              <div class="feature-item">✅ Infinite spam capability</div>
+              <div class="feature-item">✅ DM mass messaging</d
+              <div class="feature-item">✅ Modern GUI interface</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
